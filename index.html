@@ -3,154 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IPS 2028 Tracker & Personal Dashboard</title>
-    <!-- Tailwind CSS -->
+    <title>UPSC Aspirant Community Hub & IPS Tracker</title>
+    <!-- Tailwind CSS & FontAwesome Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js -->
+    <!-- Chart.js Engine -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-slate-900 text-slate-100 font-sans min-h-screen">
 
-    <!-- TOP HEADER / MOTIVATION -->
-    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50 px-6 py-4">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div>
-                <h1 class="text-2xl font-bold tracking-wider text-amber-500"><i class="fa-solid fa-shield-halved mr-2"></i>MISSION IPS 2028</h1>
-                <p class="text-sm text-slate-400 mt-1" id="motivation-text">Your journey is built day-by-day. Success is just a sequence of mastered topics away!</p>
+    <!-- AUTHENTICATION GATEWAY LAYER -->
+    <div id="auth-screen" class="fixed inset-0 bg-slate-950 z-[100] flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-6">
+            <div class="text-center">
+                <div class="inline-flex p-3 bg-amber-500/10 text-amber-500 rounded-full mb-3 text-2xl">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <h2 class="text-xl font-bold tracking-tight text-slate-100">UPSC Aspirants Secure Portal</h2>
+                <p class="text-xs text-slate-400 mt-1">Verify your credentials to view your master tracking ecosystem.</p>
             </div>
-            <div class="bg-slate-800/80 px-4 py-2 rounded-xl text-center border border-slate-700">
-                <span class="text-xs text-slate-400 block uppercase font-semibold">UPSC Benchmark Score Target</span>
-                <span class="text-lg font-bold text-emerald-400">1,000 / 2,025 Marks</span>
+
+            <!-- Toggle View Tab Bar -->
+            <div class="flex bg-slate-950 p-1 rounded-xl border border-slate-800 text-sm">
+                <button id="tab-login" onclick="switchAuthView('login')" class="w-1/2 py-2 rounded-lg font-medium bg-slate-800 text-amber-500 transition">Sign In</button>
+                <button id="tab-signup" onclick="switchAuthView('signup')" class="w-1/2 py-2 rounded-lg font-medium text-slate-400 hover:text-slate-200 transition">Register Account</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="form-login" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Registered Phone Number</label>
+                    <input type="tel" id="login-phone" placeholder="Enter 10-digit number" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:border-amber-500 outline-none text-slate-100">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Secure Password</label>
+                    <input type="password" id="login-pass" placeholder="••••••••" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:border-amber-500 outline-none text-slate-100">
+                </div>
+                <button onclick="handleLogin()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm py-3 rounded-xl transition shadow-lg shadow-amber-500/10">Access Vault Dashboard</button>
+            </div>
+
+            <!-- Registration Flow Forms -->
+            <div id="form-signup" class="space-y-4 hidden">
+                <!-- Step 1: Phone input -->
+                <div id="sg-step1" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Mobile Phone Number</label>
+                        <input type="tel" id="reg-phone" placeholder="Enter phone number" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm focus:border-amber-500 outline-none text-slate-100">
+                    </div>
+                    <button onclick="triggerOTPRequest()" class="w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 font-medium text-sm py-2.5 rounded-xl transition">Send OTP Code</button>
+                </div>
+
+                <!-- Step 2: OTP verification input box -->
+                <div id="sg-step2" class="space-y-4 hidden bg-slate-950 p-4 rounded-xl border border-slate-800">
+                    <div class="flex justify-between items-center">
+                        <label class="block text-xs font-semibold text-amber-500 uppercase"><i class="fa-solid fa-shield-sms mr-1"></i> Enter Verification OTP</label>
+                        <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded" id="mock-otp-display"></span>
+                    </div>
+                    <input type="text" id="reg-otp" placeholder="Enter OTP code displayed above" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-sm text-center font-mono tracking-widest text-slate-100">
+                    <button onclick="verifyOTPCode()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs py-2 rounded-lg transition">Verify Device OTP</button>
+                </div>
+
+                <!-- Step 3: Password setting & profile construction configurations -->
+                <div id="sg-step3" class="space-y-4 hidden">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Choose Username</label>
+                        <input type="text" id="reg-user" placeholder="e.g., IPS_Aspirant" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Create Password</label>
+                        <input type="password" id="reg-pass" placeholder="Minimum 8 characters" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Confirm Secret Password</label>
+                        <input type="password" id="reg-pass-confirm" placeholder="Re-type password" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100">
+                    </div>
+                    <button onclick="commitAccountRegistration()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm py-3 rounded-xl transition">Complete Account Profile Creation</button>
+                </div>
             </div>
         </div>
-    </header>
+    </div>
 
-    <main class="max-w-7xl mx-auto p-4 sm:p-6 space-y-6">
-
-        <!-- METRICS ROW: UPSC TARGET & PROGRESS TRACKER -->
-        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- UPSC IPS Cutoff Percentage Bar -->
-            <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 flex flex-col justify-between">
+    <!-- MAIN APP IMPLEMENTATION WRAPPER -->
+    <div id="app-content" class="hidden">
+        <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50 px-6 py-4">
+            <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div>
-                    <h3 class="text-lg font-semibold mb-2"><i class="fa-solid fa-chart-line text-blue-400 mr-2"></i>UPSC Selection Metric</h3>
-                    <p class="text-xs text-slate-400 mb-4">Percentage of total marks historically required to lock a top rank for the Indian Police Service.</p>
+                    <h1 class="text-2xl font-bold tracking-wider text-amber-500"><i class="fa-solid fa-shield-halved mr-2"></i>MISSION IPS 2028</h1>
+                    <p class="text-sm text-slate-400 mt-1">Welcome back officer profile: <span id="display-user-tag" class="text-amber-400 font-bold">Aspirant</span>. Success is just 15 foundational concepts away!</p>
                 </div>
-                <div class="space-y-3">
-                    <div class="flex justify-between text-sm font-medium">
-                        <span>Target Performance Margin</span>
-                        <span class="text-blue-400">49.38%</span>
+                <div class="flex items-center gap-3">
+                    <div class="bg-slate-800/80 px-4 py-2 rounded-xl text-center border border-slate-700">
+                        <span class="text-xs text-slate-400 block uppercase font-semibold">UPSC Benchmark Score Target</span>
+                        <span class="text-lg font-bold text-emerald-400">1,000 / 2,025 Marks</span>
                     </div>
-                    <div class="w-full bg-slate-700 rounded-full h-5 overflow-hidden p-0.5 border border-slate-600">
-                        <div class="bg-gradient-to-r from-blue-500 to-emerald-400 h-full rounded-full transition-all duration-1000 dynamic-progress-bar" style="width: 49.38%"></div>
+                    <button onclick="handleLogout()" class="bg-slate-800 hover:bg-rose-950 border border-slate-700 hover:border-rose-900 p-2.5 rounded-xl transition text-slate-400 hover:text-rose-400" title="Secure Exit"><i class="fa-solid fa-power-off"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto p-4 sm:p-6 space-y-6">
+            <!-- METRICS LAYER -->
+            <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2"><i class="fa-solid fa-chart-line text-blue-400 mr-2"></i>UPSC Selection Metric</h3>
+                        <p class="text-xs text-slate-400 mb-4">Target threshold percentage needed across components to confirm structural inclusion into IPS service ranking margins.</p>
                     </div>
-                    <span class="text-[11px] block text-slate-400 italic text-center">Based on 950-1000 marks out of a 2025 maximum aggregate.</span>
-                </div>
-            </div>
-
-            <!-- Attendance Tracker App Interface -->
-            <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 lg:col-span-2">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-semibold"><i class="fa-solid fa-calendar-check text-emerald-400 mr-2"></i>Daily Target Attendance Tracker</h3>
-                    <button onclick="resetTracker()" class="text-xs bg-slate-700 hover:bg-slate-600 px-2.5 py-1 rounded transition">Reset Day</button>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="attendance-box">
-                    <!-- Dynamic tasks rendered here via JS -->
-                </div>
-            </div>
-        </section>
-
-        <!-- ANALYTICS SECTION (CHARTS & LOGS) -->
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 flex flex-col items-center justify-center">
-                <h3 class="text-md font-semibold mb-4 text-center">Daily Activity Distribution</h3>
-                <div class="w-full max-w-[200px]">
-                    <canvas id="pieChart"></canvas>
-                </div>
-            </div>
-            <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 md:col-span-2">
-                <h3 class="text-md font-semibold mb-4"><i class="fa-solid fa-table-list text-purple-400 mr-2"></i>Weekly Routine Milestone Progress Matrix</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm text-slate-300">
-                        <thead class="bg-slate-700 text-slate-200 text-xs uppercase">
-                            <tr>
-                                <th class="p-3 rounded-l-lg">Routine Core Segment</th>
-                                <th class="p-3">Stated Focus Target</th>
-                                <th class="p-3 rounded-r-lg">Weekly Consistency</th>
-                            </tr>
-                        </thead>
-                        <tbody id="progress-matrix-body">
-                            <!-- Populated dynamically via JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- LIFESTYLE AND FITNESS MATRIX WITH CSS AVATARS -->
-        <section class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="text-lg font-semibold"><i class="fa-solid fa-heart-pulse text-rose-500 mr-2"></i>Tactical Physical Conditioning & Nutrition</h3>
-                <span class="text-xs bg-rose-500/20 text-rose-400 border border-rose-500/30 px-3 py-1 rounded-full font-medium">Daily Fitness Requirement</span>
-            </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Push ups -->
-                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/60 flex flex-col items-center">
-                    <span class="text-xs font-semibold uppercase text-slate-400 mb-2">Push-Ups (15 Mins)</span>
-                    <div class="avatar-container"><div class="avatar pushup-avatar"></div><div class="floor"></div></div>
-                    <p class="text-xs text-slate-400 text-center mt-3">Builds chest, anterior deltoids, and core stiffness required for physical test standards.</p>
-                </div>
-                <!-- Pull ups -->
-                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/60 flex flex-col items-center">
-                    <span class="text-xs font-semibold uppercase text-slate-400 mb-2">Pull-Ups (15 Mins)</span>
-                    <div class="avatar-container"><div class="bar-structure"></div><div class="avatar pullup-avatar"></div></div>
-                    <p class="text-xs text-slate-400 text-center mt-3">Develops functional back mechanics, latissimus dorsi, and grip profile capacity.</p>
-                </div>
-                <!-- Breathing Exercises -->
-                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/60 flex flex-col items-center">
-                    <span class="text-xs font-semibold uppercase text-slate-400 mb-2">Pranayama (15 Mins)</span>
-                    <div class="avatar-container"><div class="avatar breathing-avatar"></div><div class="breath-ring"></div></div>
-                    <p class="text-xs text-slate-400 text-center mt-3">Box breathing pattern (4s inhale, 4s hold, 4s exhale) to balance stress parameters.</p>
-                </div>
-                <!-- Nutritional Fuel -->
-                <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/60 flex flex-col justify-between items-center text-center p-4">
-                    <span class="text-xs font-semibold uppercase text-slate-400 mb-1">Nutritional Blueprint</span>
-                    <div class="text-4xl my-2 text-amber-400"><i class="fa-solid fa-bowl-rice"></i></div>
-                    <div class="space-y-1 text-xs text-slate-300">
-                        <div class="bg-slate-800 p-1.5 rounded border border-slate-700"><strong>Protein Source:</strong> Eggs, Sprouted Sprouts, or Paneer</div>
-                        <div class="bg-slate-800 p-1.5 rounded border border-slate-700"><strong>Micronutrients:</strong> Fresh local fruits & leafy greens</div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between text-sm font-medium">
+                            <span id="progress-bar-username-label" class="truncate max-w-[180px]">User Metric</span>
+                            <span class="text-blue-400">49.38%</span>
+                        </div>
+                        <div class="w-full bg-slate-700 rounded-full h-5 overflow-hidden p-0.5 border border-slate-600">
+                            <div class="bg-gradient-to-r from-blue-500 to-emerald-400 h-full rounded-full transition-all duration-1000" style="width: 49.38%"></div>
+                        </div>
+                        <span class="text-[11px] block text-slate-400 italic text-center">950-1000 Marks out of 2025 aggregate total profile maximums.</span>
                     </div>
-                    <span class="text-[10px] uppercase text-emerald-400 font-bold mt-2"><i class="fa-solid fa-circle-check mr-1"></i>Eat Clean Fuel</span>
                 </div>
-            </div>
-        </section>
 
-        <!-- NOTIFICATIONS & ALERT PERMISSIONS PANEL -->
-        <section class="bg-gradient-to-r from-slate-800 to-indigo-950 p-6 rounded-2xl border border-indigo-500/20 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-4">
-                <div class="text-3xl text-indigo-400"><i class="fa-solid fa-bell-ring animate-bounce"></i></div>
-                <div>
-                    <h4 class="text-md font-semibold">Enable Real-Time Internal Reminders</h4>
-                    <p class="text-xs text-slate-400">Pushes clean browser warnings at transition points to keep your schedule strictly calibrated.</p>
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 lg:col-span-2">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold"><i class="fa-solid fa-calendar-check text-emerald-400 mr-2"></i>Daily Target Attendance Tracker</h3>
+                        <button onclick="resetTracker()" class="text-xs bg-slate-700 hover:bg-slate-600 px-2.5 py-1 rounded transition">Reset Progress Matrix</button>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="attendance-box"></div>
                 </div>
-            </div>
-            <button onclick="requestNotificationAccess()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-indigo-600/20 transition whitespace-nowrap">
-                <i class="fa-solid fa-bolt mr-2"></i>Activate Alerts
-            </button>
-        </section>
+            </section>
 
-    </main>
+            <!-- ANALYTICS MATRIX -->
+            <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 flex flex-col items-center justify-center">
+                    <h3 class="text-md font-semibold mb-2 text-center text-slate-300">Activity Distribution Balance</h3>
+                    <p class="text-[11px] text-slate-500 mb-4 font-mono text-center" id="pie-user-label"></p>
+                    <div class="w-full max-w-[190px]">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 md:col-span-2">
+                    <h3 class="text-md font-semibold mb-4"><i class="fa-solid fa-table-list text-purple-400 mr-2"></i>Weekly Routine Milestone Progress Matrix</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm text-slate-300">
+                            <thead class="bg-slate-700 text-slate-200 text-xs uppercase">
+                                <tr>
+                                    <th class="p-3 rounded-l-lg">Routine Core Segment</th>
+                                    <th class="p-3">Stated Focus Target</th>
+                                    <th class="p-3 rounded-r-lg">Weekly Consistency</th>
+                                </tr>
+                            </thead>
+                            <tbody id="progress-matrix-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
 
-    <footer class="text-center py-8 text-xs text-slate-500 border-t border-slate-800 mt-12">
-        Custom Single-User IPS Core Dashboard Engine. Optimized for Personal Local File Execution.
-    </footer>
+            <!-- LIFESTYLE WORKOUT ENGINE -->
+            <section class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-lg font-semibold"><i class="fa-solid fa-heart-pulse text-rose-500 mr-2"></i>Tactical Physical Conditioning & Nutrition</h3>
+                    <span class="text-xs bg-rose-500/20 text-rose-400 border border-rose-500/30 px-3 py-1 rounded-full font-medium">Daily Fitness Requirement</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/60 flex flex-col items-center">
+                        <span class="text-xs font-semibold uppercase text-slate-400 mb-2">Push-Ups (15 Mins)</span>
+                        <div class="avatar-container"><div class="avatar pushup-avatar"></div><div class="floor"></div></div>
+                        <p class="text-xs text-slate-400 text-center mt-3">Builds chest and core stiffness required for police standard metrics.</p>
+                    </div>
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/60 flex flex-col items-center">
+                        <span class="text-xs font-semibold uppercase text-slate-400 mb-2">Pull-Ups (15 Mins)</span>
+                        <div class="avatar-container"><div class="bar-structure"></div><div class="avatar pullup-avatar"></div></div>
+                        <p class="text-xs text-slate-400 text-center mt-3">Develops functional back mechanics and grip profile capacity parameters.</p>
+                    </div>
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/60 flex flex-col items-center">
+                        <span class="text-xs font-semibold uppercase text-slate-400 mb-2">Pranayama (15 Mins)</span>
+                        <div class="avatar-container"><div class="avatar breathing-avatar"></div><div class="breath-ring"></div></div>
+                        <p class="text-xs text-slate-400 text-center mt-3">Box pattern routines to intentionally optimize blood oxygen metrics and clear focus vectors.</p>
+                    </div>
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-700/60 flex flex-col justify-between items-center text-center p-4">
+                        <span class="text-xs font-semibold uppercase text-slate-400 mb-1">Nutritional Blueprint</span>
+                        <div class="text-4xl my-2 text-amber-400"><i class="fa-solid fa-bowl-rice"></i></div>
+                        <div class="space-y-1 text-xs text-slate-300 w-full">
+                            <div class="bg-slate-800 p-1.5 rounded border border-slate-700"><strong>Protein:</strong> Eggs, Sprouts, or Paneer components</div>
+                            <div class="bg-slate-800 p-1.5 rounded border border-slate-700"><strong>Micros:</strong> Iron-rich local greens & vitamins</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
 
-    <!-- INTERACTIVE ENGINE COMPONENT -->
+    <!-- ENGINE CONTROL LOGIC CODE MODULE -->
     <script>
-        // Routine Items Model
         const routineItems = [
             { id: 'static_gs', label: 'UPSC Static General Studies Block', type: 'study', duration: 2.5 },
             { id: 'zoology', label: 'Zoology Optional Text Study', type: 'study', duration: 2.0 },
@@ -160,32 +203,103 @@
             { id: 'coding', label: 'Creative Tech & Web Development', type: 'coding', duration: 1.0 }
         ];
 
-        // Hydrate UI State from Storage or defaults
-        let checkedState = JSON.parse(localStorage.getItem('ips_dashboard_attendance')) || {};
+        let database = JSON.parse(localStorage.getItem('upsc_platform_db')) || {};
+        let sessionUserKey = localStorage.getItem('upsc_current_session_phone') || null;
+        let generatedMockOTP = null;
         let pieChartInstance = null;
 
-        function initializeDashboard() {
+        function switchAuthView(view) {
+            document.getElementById('form-login').classList.toggle('hidden', view !== 'login');
+            document.getElementById('form-signup').classList.toggle('hidden', view !== 'signup');
+            document.getElementById('tab-login').className = view === 'login' ? "w-1/2 py-2 rounded-lg font-medium bg-slate-800 text-amber-500 transition" : "w-1/2 py-2 rounded-lg font-medium text-slate-400 hover:text-slate-200 transition";
+            document.getElementById('tab-signup').className = view === 'signup' ? "w-1/2 py-2 rounded-lg font-medium bg-slate-800 text-amber-500 transition" : "w-1/2 py-2 rounded-lg font-medium text-slate-400 hover:text-slate-200 transition";
+        }
+
+        function triggerOTPRequest() {
+            const phone = document.getElementById('reg-phone').value.trim();
+            if(phone.length < 10) { alert("Enter a valid phone key combination standard mapping parameters."); return; }
+            if(database[phone]) { alert("An account with this phone record exists on file securely."); return; }
+            
+            generatedMockOTP = Math.floor(100000 + Math.random() * 900000).toString();
+            document.getElementById('mock-otp-display').innerText = `SMS OTP code: ${generatedMockOTP}`;
+            document.getElementById('sg-step2').classList.remove('hidden');
+        }
+
+        function verifyOTPCode() {
+            const typed = document.getElementById('reg-otp').value.trim();
+            if(typed === generatedMockOTP && generatedMockOTP !== null) {
+                document.getElementById('sg-step1').classList.add('hidden');
+                document.getElementById('sg-step2').classList.add('hidden');
+                document.getElementById('sg-step3').classList.remove('hidden');
+            } else {
+                alert("Incorrect entry verification checksum signature mismatch mismatch.");
+            }
+        }
+
+        function commitAccountRegistration() {
+            const phone = document.getElementById('reg-phone').value.trim();
+            const username = document.getElementById('reg-user').value.trim() || "Aspirant";
+            const pass = document.getElementById('reg-pass').value;
+            const confirm = document.getElementById('reg-pass-confirm').value;
+
+            if(pass.length < 6) { alert("Ensure structural alignment integrity of password lengths."); return; }
+            if(pass !== confirm) { alert("Confirmation checking profile matrix error matching states."); return; }
+
+            database[phone] = {
+                username: username,
+                password: pass,
+                trackingHistory: {}
+            };
+            localStorage.setItem('upsc_platform_db', JSON.stringify(database));
+            alert("Account generated securely on repository data matrix! Sign in to verify your access.");
+            location.reload();
+        }
+
+        function handleLogin() {
+            const phone = document.getElementById('login-phone').value.trim();
+            const pass = document.getElementById('login-pass').value;
+
+            if(database[phone] && database[phone].password === pass) {
+                localStorage.setItem('upsc_current_session_phone', phone);
+                sessionUserKey = phone;
+                bootAppLayout();
+            } else {
+                alert("Invalid telephone identification matching criteria validation failure flags.");
+            }
+        }
+
+        function bootAppLayout() {
+            if(!sessionUserKey || !database[sessionUserKey]) return;
+            document.getElementById('auth-screen').classList.add('hidden');
+            document.getElementById('app-content').classList.remove('hidden');
+            
+            const currentUser = database[sessionUserKey];
+            document.getElementById('display-user-tag').innerText = currentUser.username;
+            document.getElementById('progress-bar-username-label').innerText = `${currentUser.username}'s Track`;
+            document.getElementById('pie-user-label').innerText = `Active Session: ${currentUser.username}`;
+            
             renderAttendanceTracker();
             renderProgressMatrix();
             buildOrUpdateCharts();
-            setupTimedNotifications();
         }
 
         function renderAttendanceTracker() {
             const box = document.getElementById('attendance-box');
             box.innerHTML = '';
+            const userHistory = database[sessionUserKey].trackingHistory;
+
             routineItems.forEach(item => {
-                const isChecked = checkedState[item.id] ? 'checked' : '';
-                const cardBg = checkedState[item.id] ? 'bg-slate-700/60 border-emerald-500/40' : 'bg-slate-900/40 border-slate-700';
+                const isChecked = userHistory[item.id] ? 'checked' : '';
+                const cardBg = userHistory[item.id] ? 'bg-slate-700/60 border-emerald-500/40' : 'bg-slate-900/40 border-slate-700';
                 
                 box.innerHTML += `
-                    <div class="flex items-center justify-between p-3.5 rounded-xl border ${cardBg} transition duration-200">
+                    <div class="flex items-center justify-between p-3 rounded-xl border ${cardBg} transition">
                         <div class="flex items-center gap-3">
                             <input type="checkbox" id="chk-${item.id}" ${isChecked} onchange="toggleTask('${item.id}')" 
-                                class="w-5 h-5 rounded text-emerald-500 bg-slate-800 border-slate-600 focus:ring-0 focus:ring-offset-0 cursor-pointer">
-                            <label for="chk-${item.id}" class="text-sm font-medium select-none cursor-pointer">${item.label}</label>
+                                class="w-4 h-4 rounded text-emerald-500 bg-slate-800 border-slate-600 focus:ring-0 cursor-pointer">
+                            <label for="chk-${item.id}" class="text-xs font-medium select-none cursor-pointer">${item.label}</label>
                         </div>
-                        <span class="text-xs px-2 py-0.5 bg-slate-800 text-slate-400 rounded-md font-mono">${item.duration}h</span>
+                        <span class="text-[11px] px-2 py-0.5 bg-slate-800 text-slate-400 rounded font-mono">${item.duration}h</span>
                     </div>
                 `;
             });
@@ -194,20 +308,20 @@
         function renderProgressMatrix() {
             const body = document.getElementById('progress-matrix-body');
             body.innerHTML = '';
+            const userHistory = database[sessionUserKey].trackingHistory;
+
             routineItems.forEach(item => {
-                const totalChecked = checkedState[item.id] ? 1 : 0; 
-                // Simulated metrics showing stable consistency over baseline
-                const percentageString = checkedState[item.id] ? '100%' : '0%';
+                const percentageString = userHistory[item.id] ? '100%' : '0%';
                 body.innerHTML += `
                     <tr class="border-b border-slate-700/50 hover:bg-slate-800/30 transition">
-                        <td class="p-3 font-medium text-slate-200">${item.label}</td>
+                        <td class="p-3 font-medium text-xs text-slate-200">${item.label}</td>
                         <td class="p-3 text-xs text-slate-400 font-mono">${item.duration} Hours/Day</td>
                         <td class="p-3">
                             <div class="flex items-center gap-2">
-                                <div class="w-24 bg-slate-700 h-2 rounded-full overflow-hidden">
+                                <div class="w-20 bg-slate-700 h-1.5 rounded-full overflow-hidden">
                                     <div class="bg-purple-500 h-full" style="width: ${percentageString}"></div>
                                 </div>
-                                <span class="text-xs font-mono text-slate-400">${percentageString}</span>
+                                <span class="text-[11px] font-mono text-slate-400">${percentageString}</span>
                             </div>
                         </td>
                     </tr>
@@ -216,28 +330,34 @@
         }
 
         function toggleTask(id) {
-            checkedState[id] = !checkedState[id];
-            localStorage.setItem('ips_dashboard_attendance', JSON.stringify(checkedState));
-            initializeDashboard();
+            const userHistory = database[sessionUserKey].trackingHistory;
+            userHistory[id] = !userHistory[id];
+            
+            database[sessionUserKey].trackingHistory = userHistory;
+            localStorage.setItem('upsc_platform_db', JSON.stringify(database));
+            
+            renderAttendanceTracker();
+            renderProgressMatrix();
+            buildOrUpdateCharts();
         }
 
         function resetTracker() {
-            checkedState = {};
-            localStorage.removeItem('ips_dashboard_attendance');
-            initializeDashboard();
+            database[sessionUserKey].trackingHistory = {};
+            localStorage.setItem('upsc_platform_db', JSON.stringify(database));
+            renderAttendanceTracker();
+            renderProgressMatrix();
+            buildOrUpdateCharts();
         }
 
         function buildOrUpdateCharts() {
             const ctx = document.getElementById('pieChart').getContext('2d');
+            const userHistory = database[sessionUserKey].trackingHistory;
             
-            let dataValues = [0, 0, 0, 0, 0, 0];
-            routineItems.forEach((item, index) => {
-                if(checkedState[item.id]) {
-                    dataValues[index] = item.duration;
-                }
+            let dataValues = [0,0,0,0,0,0];
+            routineItems.forEach((item, idx) => {
+                if(userHistory[item.id]) dataValues[idx] = item.duration;
             });
 
-            // Fallback default state configuration if empty
             if (dataValues.every(v => v === 0)) {
                 dataValues = routineItems.map(i => i.duration);
             }
@@ -265,44 +385,16 @@
             }
         }
 
-        // Notification Engine System
-        function requestNotificationAccess() {
-            if (!("Notification" in window)) {
-                alert("Browser system does not natively support system notification profiles.");
-                return;
+        function handleLogout() {
+            localStorage.removeItem('upsc_current_session_phone');
+            location.reload();
+        }
+
+        window.onload = function() {
+            if(sessionUserKey && database[sessionUserKey]) {
+                bootAppLayout();
             }
-            Notification.requestPermission().then(permission => {
-                if (permission === "granted") {
-                    new Notification("System Initialized", { body: "Your daily tracking timeline will now push updates cleanly.", silent: true });
-                }
-            });
-        }
-
-        function setupTimedNotifications() {
-            // Evaluates user device system context time variables continuously
-            setInterval(() => {
-                const now = new Date();
-                const timeString = now.toTimeString().split(' ')[0].substring(0,5); // "HH:MM"
-                
-                const alerts = {
-                    "06:00": "Time to execute UPSC Static General Studies focus segment.",
-                    "08:30": "News Block: Open current affairs portals for analysis.",
-                    "16:30": "College requirements complete. Pivot to Zoology Optional study.",
-                    "18:30": "Fitness Session: Begin Push-Up, Pull-Up, and breathing protocols.",
-                    "19:15": "Nutrition block. Ensure high quality whole food components.",
-                    "21:30": "Tech hours: Initialize coding environment modules."
-                };
-
-                if (alerts[timeString] && Notification.permission === "granted") {
-                    new Notification("Routine Trigger Notification", {
-                        body: alerts[timeString],
-                        requireInteraction: true
-                    });
-                }
-            }, 60000); // Evaluates clock delta updates every 60 seconds cleanly
-        }
-
-        window.onload = initializeDashboard;
+        };
     </script>
 </body>
 </html>

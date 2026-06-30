@@ -1,0 +1,89 @@
+/* Custom CSS Character Animation Engine */
+
+.avatar-container {
+    position: relative;
+    width: 100px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.4);
+    border-radius: 12px;
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    overflow: hidden;
+}
+
+.avatar {
+    width: 24px;
+    height: 24px;
+    background-color: #f59e0b;
+    border-radius: 50%;
+    position: relative;
+}
+
+/* Floor Graphic lines */
+.floor {
+    position: absolute;
+    bottom: 15px;
+    width: 70%;
+    height: 2px;
+    background-color: #475569;
+}
+
+/* Bar Graphic structure for pullups */
+.bar-structure {
+    position: absolute;
+    top: 20px;
+    width: 50%;
+    height: 3px;
+    background-color: #94a3b8;
+}
+
+/* 1. PUSH UP ANIMATION KEYFRAMES */
+.pushup-avatar {
+    animation: pushup 2.5s infinite ease-in-out;
+}
+@keyframes pushup {
+    0%, 100% {
+        transform: translateY(15px) scaleX(1.3) scaleY(0.7);
+        background-color: #ef4444;
+    }
+    50% {
+        transform: translateY(30px) scaleX(1.4) scaleY(0.5);
+        background-color: #f59e0b;
+    }
+}
+
+/* 2. PULL UP ANIMATION KEYFRAMES */
+.pullup-avatar {
+    animation: pullup 3s infinite ease-in-out;
+}
+@keyframes pullup {
+    0%, 100% {
+        transform: translateY(25px);
+        background-color: #3b82f6;
+    }
+    50% {
+        transform: translateY(-5px);
+        background-color: #10b981;
+    }
+}
+
+/* 3. PRANAYAMA BREATHING ANIMATION KEYFRAMES */
+.breathing-avatar {
+    animation: breath 4s infinite ease-in-out;
+}
+.breath-ring {
+    position: absolute;
+    border: 2px solid #22c55e;
+    border-radius: 50%;
+    animation: ring-expand 4s infinite ease-in-out;
+}
+@keyframes breath {
+    0%, 100% { transform: scale(0.8); background-color: #06b6d4; }
+    50% { transform: scale(1.3); background-color: #22c55e; }
+}
+@keyframes ring-expand {
+    0%, 100% { width: 30px; height: 30px; opacity: 0.2; }
+    50% { width: 55px; height: 55px; opacity: 0.7; }
+}

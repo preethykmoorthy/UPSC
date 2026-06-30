@@ -4,33 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UPSC Elite Custom Tracking Ecosystem</title>
-    <!-- Tailwind CSS & FontAwesome Icons Icons -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Chart.js Engine -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen">
 
-    <!-- UNIVERSAL GATEWAY SECURITY LAYER -->
     <div id="auth-screen" class="fixed inset-0 bg-slate-950 z-[100] flex items-center justify-center p-4 overflow-y-auto">
         <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-2xl p-6 shadow-2xl space-y-6 my-8">
             <div class="text-center">
                 <div class="inline-flex p-3 bg-amber-500/10 text-amber-500 rounded-full mb-2 text-2xl">
-                    <i class="fa-solid fa-graduation-cap"></i>
+                    <i class="fa-solid fa-user-shield"></i>
                 </div>
                 <h2 class="text-xl font-bold tracking-tight text-slate-100">UPSC Aspirant Gateway Engine</h2>
                 <p class="text-xs text-slate-400 mt-1">Configure your personalized target metrics profile securely.</p>
             </div>
 
-            <!-- Tab Toggles View -->
             <div class="flex bg-slate-950 p-1 rounded-xl border border-slate-800 text-sm">
                 <button id="tab-login" onclick="switchAuthView('login')" class="w-1/2 py-2 rounded-lg font-medium bg-slate-800 text-amber-500 transition">Sign In</button>
                 <button id="tab-signup" onclick="switchAuthView('signup')" class="w-1/2 py-2 rounded-lg font-medium text-slate-400 hover:text-slate-200 transition">Create Engine Account</button>
             </div>
 
-            <!-- Login Matrix Form -->
             <div id="form-login" class="space-y-4">
                 <div>
                     <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Phone Number Master Key ID</label>
@@ -43,37 +38,33 @@
                 <button onclick="handleLogin()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-sm py-3 rounded-xl transition shadow-lg">Access Dashboard Vault</button>
             </div>
 
-            <!-- Complex Branching Registration Flow Form -->
             <div id="form-signup" class="space-y-4 hidden">
                 
-                <!-- Registration Step 1: Base Phone & Authentication -->
                 <div id="sg-step1" class="space-y-4">
                     <div>
                         <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Mobile Phone Number</label>
-                        <input type="tel" id="reg-phone" placeholder="Enter number" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100">
+                        <input type="tel" id="reg-phone" placeholder="Enter 10-digit number" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100">
                     </div>
-                    <button onclick="triggerOTPRequest()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-sm py-2.5 rounded-xl transition border border-slate-700">Send Secure Verification OTP</button>
+                    <button onclick="triggerSecureAudioOTP()" class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-sm py-2.5 rounded-xl transition border border-slate-700"><i class="fa-solid fa-phone-volume mr-2 text-amber-500"></i>Trigger Audio Verification Call</button>
                 </div>
 
-                <!-- Registration Step 2: Verification Loop Checkbox -->
                 <div id="sg-step2" class="space-y-3 hidden bg-slate-950 p-4 rounded-xl border border-slate-800">
                     <div class="flex justify-between items-center">
-                        <label class="block text-xs font-semibold text-amber-500 uppercase">Input Active System OTP Token</label>
-                        <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded font-mono" id="mock-otp-display"></span>
+                        <label class="block text-xs font-semibold text-amber-500 uppercase"><i class="fa-solid fa-ear-listen mr-1"></i> Listen to Device Audio Verification Out Loud</label>
                     </div>
-                    <input type="text" id="reg-otp" placeholder="Enter validation token" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-center text-sm font-mono tracking-widest text-slate-100">
+                    <p class="text-[10px] text-slate-500 italic">The system is speaking the validation token out loud via your speaker system to ensure device number validity flags.</p>
+                    <input type="text" id="reg-otp" placeholder="Enter spoken security code" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-center text-sm font-mono tracking-widest text-slate-100">
                     <button onclick="verifyOTPCode()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs py-2 rounded-lg transition">Verify Token</button>
                 </div>
 
-                <!-- Registration Step 3: Complex Interactive Branching Form Profile Data -->
                 <div id="sg-step3" class="space-y-4 hidden max-h-[400px] overflow-y-auto pr-2">
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Display Username</label>
-                            <input type="text" id="reg-user" placeholder="e.g., IAS_Officer" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100">
+                            <input type="text" id="reg-user" placeholder="e.g., Target_Rank1" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100">
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Dream Service post</label>
+                            <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Dream Service</label>
                             <input type="text" id="reg-dream" placeholder="e.g., IAS, IPS, IFS" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100">
                         </div>
                     </div>
@@ -84,6 +75,13 @@
                             <input type="text" id="reg-optional" placeholder="e.g., Zoology, History" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100">
                         </div>
                         <div>
+                            <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Personal Relaxation Hobby</label>
+                            <input type="text" id="reg-hobby" placeholder="e.g., Website Dev, Chess" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
                             <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Target Exam Year</label>
                             <select id="reg-year" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300">
                                 <option value="2027">2027</option>
@@ -91,19 +89,16 @@
                                 <option value="2029">2029</option>
                             </select>
                         </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Preparation Framework</label>
+                            <select id="reg-coaching" onchange="toggleCoachingFields('reg-coaching', 'reg-self-study-subfields')" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300">
+                                <option value="no">Self-Study Framework Route</option>
+                                <option value="yes">Attending Structured Coaching Classes</option>
+                            </select>
+                        </div>
                     </div>
 
-                    <!-- Branching Option: Coaching Status -->
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">UPSC Preparation Ecosystem Channel</label>
-                        <select id="reg-coaching" onchange="toggleCoachingFields()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-300">
-                            <option value="no">Self-Study Framework Route</option>
-                            <option value="yes">Attending Structured Coaching Classes</option>
-                        </select>
-                    </div>
-
-                    <!-- Nested Branching Option: Self-Study Details -->
-                    <div id="self-study-subfields" class="space-y-3 bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <div id="reg-self-study-subfields" class="space-y-3 bg-slate-950 p-3 rounded-xl border border-slate-800">
                         <div>
                             <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Current Academic Focus Category</label>
                             <select id="reg-study-mode" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-slate-300">
@@ -114,8 +109,8 @@
                         <div>
                             <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Circadian Rhythm Focus Mode</label>
                             <select id="reg-circadian" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-xs text-slate-300">
-                                <option value="diurnal">Diurnal (Active/Peak Performance during daytime frames)</option>
-                                <option value="nocturnal">Nocturnal (Active/Peak Performance during late night tracks)</option>
+                                <option value="diurnal">Diurnal (Daylight Peak Engine Framework)</option>
+                                <option value="nocturnal">Nocturnal (Late Night Owl Shift Module)</option>
                             </select>
                         </div>
                     </div>
@@ -131,22 +126,70 @@
                         </div>
                     </div>
 
-                    <button onclick="commitAccountRegistration()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs py-3 rounded-xl transition">Finalize Configuration Account Profile</button>
+                    <button onclick="commitAccountRegistration()" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs py-3 rounded-xl transition">Finalize Profile Account</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MAIN INTERACTIVE TRACKER APPLICATIONS MODULE -->
+    <div id="profile-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur z-[90] hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                <h3 class="font-bold text-md text-amber-500"><i class="fa-solid fa-user-gear mr-2"></i>Edit Target Profile Options</h3>
+                <button onclick="toggleProfileModal(false)" class="text-slate-400 hover:text-slate-200"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p class="text-[11px] text-slate-400">Modifying tracking environments dynamically adapts baseline targets. **Your tracked hours and history remain preserved.**</p>
+            
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-400 mb-1 font-semibold">Dream Target Service Post</label>
+                    <input type="text" id="edit-dream" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-slate-100">
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1 font-semibold">UPSC Optional Specialization</label>
+                    <input type="text" id="edit-optional" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-slate-100">
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1 font-semibold">Personal Relaxation Hobby</label>
+                    <input type="text" id="edit-hobby" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-slate-100">
+                </div>
+                <div>
+                    <label class="block text-slate-400 mb-1 font-semibold">Ecosystem Track Selection</label>
+                    <select id="edit-coaching" onchange="toggleCoachingFields('edit-coaching', 'edit-self-study-subfields')" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-slate-300">
+                        <option value="no">Self-Study Framework Route</option>
+                        <option value="yes">Attending Structured Coaching Classes</option>
+                    </select>
+                </div>
+                <div id="edit-self-study-subfields" class="space-y-2 bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <div>
+                        <label class="block text-slate-500 mb-1">Academic Allocation</label>
+                        <select id="edit-study-mode" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-slate-300">
+                            <option value="fulltime">Full-Time Self Study Dedication</option>
+                            <option value="college">Attending College/University Programs concurrently</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 mb-1">Circadian Mode</label>
+                        <select id="edit-circadian" class="w-full bg-slate-900 border border-slate-700 rounded p-1.5 text-slate-300">
+                            <option value="diurnal">Diurnal (Day Peak Focus)</option>
+                            <option value="nocturnal">Nocturnal (Night Owl Focus)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button onclick="saveProfileModifications()" class="w-full bg-emerald-600 hover:bg-emerald-500 font-bold text-xs py-2.5 rounded-xl transition mt-2">Update Operational Profile</button>
+        </div>
+    </div>
+
     <div id="app-content" class="hidden">
         <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-50 px-6 py-4">
             <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div>
                     <h1 class="text-2xl font-bold tracking-wider text-amber-500"><i class="fa-solid fa-landmark mr-2"></i>TARGET <span id="display-dream-tag" class="uppercase">UPSC</span> HUB</h1>
-                    <p class="text-xs text-slate-400 mt-1">Officer Profile Matrix: <span id="display-user-tag" class="text-amber-400 font-bold">Aspirant</span> | Target Year: <span id="display-year-tag" class="text-slate-300 font-mono">2028</span> | Optional: <span id="display-optional-tag" class="text-slate-300 font-medium">Zoology</span></p>
+                    <p class="text-xs text-slate-400 mt-1">Officer Profile Matrix: <span id="display-user-tag" class="text-amber-400 font-bold">Aspirant</span> | Optional: <span id="display-optional-tag" class="text-slate-300 font-medium">Zoology</span> | Hobby Focus: <span id="display-hobby-tag" class="text-slate-300 font-medium">Relax</span></p>
                 </div>
                 <div class="flex items-center gap-3">
-                    <div id="schedule-badge" class="text-[11px] font-mono bg-slate-800 border border-slate-700 px-3 py-1.5 rounded-xl hidden sm:block"></div>
+                    <button onclick="toggleProfileModal(true)" class="bg-slate-800 hover:bg-slate-700 text-xs px-3 py-2 rounded-xl border border-slate-700 transition"><i class="fa-solid fa-user-gear mr-1.5"></i>Settings</button>
                     <button onclick="handleLogout()" class="bg-slate-800 hover:bg-rose-950 border border-slate-700 text-slate-400 hover:text-rose-400 p-2.5 rounded-xl transition" title="Log Out Securely"><i class="fa-solid fa-power-off"></i></button>
                 </div>
             </div>
@@ -154,17 +197,16 @@
 
         <main class="max-w-7xl mx-auto p-4 sm:p-6 space-y-6">
             
-            <!-- ELIGIBILITY GRAPHIC ROWS -->
             <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 flex flex-col justify-between">
                     <div>
-                        <h3 class="text-md font-semibold mb-1"><i class="fa-solid fa-chart-pie text-blue-400 mr-2"></i>UPSC Selection Metric Calculation</h3>
-                        <p class="text-[11px] text-slate-400 mb-4">Calculates cumulative tracker study hour modules relative to current stream parameters dynamically.</p>
+                        <h3 class="text-md font-semibold mb-1"><i class="fa-solid fa-chart-pie text-blue-400 mr-2"></i>Selection Metric Calculation</h3>
+                        <p class="text-[11px] text-slate-400 mb-4">Calculates tracked hours relative to current profile stream baseline parameter requirements.</p>
                     </div>
                     <div class="space-y-3">
                         <div class="flex justify-between text-xs font-bold font-mono">
-                            <span>Platform Success Calculation</span>
-                            <span id="eligibility-percentage-text" class="text-emerald-400">0% Eligible to get selected</span>
+                            <span>Platform Success Progress</span>
+                            <span id="eligibility-percentage-text" class="text-emerald-400">0% eligible to get selected</span>
                         </div>
                         <div class="w-full bg-slate-950 rounded-full h-4 overflow-hidden p-0.5 border border-slate-700">
                             <div id="eligibility-progress-bar" class="bg-gradient-to-r from-amber-500 via-yellow-400 to-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
@@ -172,30 +214,26 @@
                     </div>
                 </div>
 
-                <!-- CUMULATIVE TIME TRACKER ENGINE BOX -->
                 <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 lg:col-span-2">
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-md font-semibold"><i class="fa-solid fa-stopwatch text-amber-500 mr-2"></i>Interactive Cumulative Focus Stopwatches</h3>
-                        <button onclick="resetDailyTimers()" class="text-[11px] bg-slate-900 hover:bg-slate-700 border border-slate-700 px-3 py-1 rounded-lg transition">Clear All Current Day Metrics</button>
+                        <div class="bg-slate-950 border border-slate-800 px-3 py-1 rounded-xl text-[10px] text-rose-400 border-rose-950/40 font-mono"><i class="fa-solid fa-triangle-exclamation mr-1.5"></i>Mishap options are isolated inside rows below.</div>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="timers-grid-mount">
-                        <!-- Custom stopwatch timers are generated here dynamically via Javascript orchestration modules -->
-                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="timers-grid-mount"></div>
                 </div>
             </section>
 
-            <!-- ANALYTICS PLOTS GRAPH SECTION -->
             <section class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 flex flex-col items-center justify-center">
                     <h3 class="text-xs font-semibold mb-3 text-center uppercase tracking-wider text-slate-400">Tracking Share</h3>
-                    <div class="w-full max-w-[160px] max-h-[160px]">
+                    <div class="w-full max-w-[155px] max-h-[155px]">
                         <canvas id="pieChart"></canvas>
                     </div>
                 </div>
                 <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 md:col-span-2 flex flex-col justify-between">
                     <div>
                         <h3 class="text-md font-semibold mb-2"><i class="fa-solid fa-route text-indigo-400 mr-2"></i>Strategic Schedule Routing</h3>
-                        <p class="text-xs text-slate-400 mb-4 font-mono" id="profile-explanation-string">Loading personalized optimization algorithms...</p>
+                        <p class="text-xs text-slate-400 mb-4 font-mono" id="profile-explanation-string"></p>
                     </div>
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex justify-around items-center text-center gap-2">
                         <div>
@@ -204,45 +242,38 @@
                         </div>
                         <div class="w-px h-8 bg-slate-800"></div>
                         <div>
-                            <span class="text-[10px] text-slate-500 block uppercase font-bold">Stream Allocation Frame</span>
+                            <span class="text-[10px] text-slate-500 block uppercase font-bold">Current Stream Baseline Target</span>
                             <span id="stat-stream-target" class="text-lg font-bold text-blue-400 font-mono">-- Hours</span>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- CONDITIONING GRAPHICS LAYER -->
-            <section class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
-                <h3 class="text-md font-semibold mb-4"><i class="fa-solid fa-heart-pulse text-rose-500 mr-2"></i>Tactical Physical Conditioning Standards</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <section id="ips-conditioning-box" class="bg-slate-800 p-6 rounded-2xl border border-slate-700 hidden">
+                <h3 class="text-md font-semibold mb-4 text-rose-400"><i class="fa-solid fa-shield-halved mr-2"></i>Tactical Physical Conditioning Standards (IPS Locked Module)</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center">
                         <span class="text-xs font-bold text-slate-400 uppercase mb-2">Push-Ups Routine</span>
                         <div class="avatar-container"><div class="avatar pushup-avatar"></div><div class="floor"></div></div>
-                        <span class="text-[11px] text-slate-400 mt-2 font-mono text-center">15 Mins Target Velocity</span>
+                        <span class="text-[11px] text-slate-400 mt-2 font-mono">15 Mins Target Velocity</span>
                     </div>
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center">
                         <span class="text-xs font-bold text-slate-400 uppercase mb-2">Pull-Ups Target</span>
                         <div class="avatar-container"><div class="bar-structure"></div><div class="avatar pullup-avatar"></div></div>
-                        <span class="text-[11px] text-slate-400 mt-2 font-mono text-center">15 Mins Functional Pulls</span>
+                        <span class="text-[11px] text-slate-400 mt-2 font-mono">15 Mins Functional Pulls</span>
                     </div>
                     <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center">
                         <span class="text-xs font-bold text-slate-400 uppercase mb-2">Pranayama Box Breath</span>
                         <div class="avatar-container"><div class="avatar breathing-avatar"></div><div class="breath-ring"></div></div>
-                        <span class="text-[11px] text-slate-400 mt-2 font-mono text-center">15 Mins Oxygen Balance</span>
-                    </div>
-                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col justify-center items-center text-center p-3">
-                        <div class="text-2xl text-emerald-400 mb-1"><i class="fa-solid fa-apple-whole"></i></div>
-                        <span class="text-xs font-bold text-slate-300 block mb-1">Aspirant Fuel Standard</span>
-                        <p class="text-[11px] text-slate-400">Prioritize clean macros, simple greens, and consistent hydration tracks daily.</p>
+                        <span class="text-[11px] text-slate-400 mt-2 font-mono">15 Mins Oxygen Balance</span>
                     </div>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- ENGINE CODE LOGIC ORCHESTRATION LAYER -->
     <script>
-        let database = JSON.parse(localStorage.getItem('upsc_community_platform_db')) || {};
+        let database = JSON.parse(localStorage.getItem('upsc_platform_secure_db')) || {};
         let sessionUserKey = localStorage.getItem('upsc_platform_active_phone') || null;
         let activeTimerId = null;
         let timerIntervalInstance = null;
@@ -250,10 +281,10 @@
         let generatedMockOTP = null;
 
         const baseRoutineItems = [
-            { id: 'static_gs', label: 'UPSC General Studies Foundation Core', type: 'study' },
-            { id: 'optional_paper', label: 'Optional Subject Specialization Text', type: 'optional' },
-            { id: 'news_editorial', label: 'Daily Editorial & National News Analysis', type: 'news' },
-            { id: 'tech_coding', label: 'Tech Skill Development / Coding Block', type: 'tech' }
+            { id: 'static_gs', label: 'UPSC General Studies Foundation Core' },
+            { id: 'optional_paper', label: 'Optional Subject Specialization Text' },
+            { id: 'news_editorial', label: 'Daily Editorial & National News Analysis' },
+            { id: 'hobby_relaxation', label: 'Personal Relaxation Hobby Development' }
         ];
 
         function switchAuthView(view) {
@@ -263,18 +294,30 @@
             document.getElementById('tab-signup').className = view === 'signup' ? "w-1/2 py-2 rounded-lg font-medium bg-slate-800 text-amber-500 transition" : "w-1/2 py-2 rounded-lg font-medium text-slate-400 hover:text-slate-200 transition";
         }
 
-        function toggleCoachingFields() {
-            const isCoaching = document.getElementById('reg-coaching').value === 'yes';
-            document.getElementById('self-study-subfields').classList.toggle('hidden', isCoaching);
+        function toggleCoachingFields(triggerId, targetId) {
+            const isCoaching = document.getElementById(triggerId).value === 'yes';
+            document.getElementById(targetId).classList.toggle('hidden', isCoaching);
         }
 
-        function triggerOTPRequest() {
+        function triggerSecureAudioOTP() {
             const phone = document.getElementById('reg-phone').value.trim();
-            if(phone.length < 10) { alert("Invalid numerical configuration length input parameters."); return; }
-            if(database[phone]) { alert("This identification node key is already mapped onto the core database repository."); return; }
+            if(phone.length < 10) { alert("Invalid telephone numerical layout pattern parameter lengths."); return; }
+            if(database[phone]) { alert("An operational data profile matrix exists for this entry master identity node."); return; }
 
             generatedMockOTP = Math.floor(100000 + Math.random() * 900000).toString();
-            document.getElementById('mock-otp-display').innerText = `SMS Verification OTP: ${generatedMockOTP}`;
+            
+            // SECURITY SPEECH ENGINE CALL - Speaks token code out loud cleanly
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const textPayload = `Verification requested. Your secure entry validation token passcode is: ${generatedMockOTP.split('').join(' ')}. Re-verifying passcode: ${generatedMockOTP.split('').join(' ')}. Please input this token code to verify your phone number.`;
+                const speechNode = new SpeechSynthesisUtterance(textPayload);
+                speechNode.rate = 0.85;
+                speechNode.pitch = 1.0;
+                window.speechSynthesis.speak(speechNode);
+            } else {
+                alert(`Audio synthesis layer unavailable. Sandbox fallback authentication verification token code: ${generatedMockOTP}`);
+            }
+
             document.getElementById('sg-step2').classList.remove('hidden');
         }
 
@@ -284,7 +327,7 @@
                 document.getElementById('sg-step2').classList.add('hidden');
                 document.getElementById('sg-step3').classList.remove('hidden');
             } else {
-                alert("Cryptographic data signature tracking validation parameters error.");
+                alert("Cryptographic identification checksum parameter mismatch verification flag failed.");
             }
         }
 
@@ -293,34 +336,28 @@
             const username = document.getElementById('reg-user').value.trim() || "Aspirant";
             const dream = document.getElementById('reg-dream').value.trim() || "IAS";
             const optional = document.getElementById('reg-optional').value.trim() || "Zoology";
+            const hobby = document.getElementById('reg-hobby').value.trim() || "Relaxation";
             const year = document.getElementById('reg-year').value;
             const coaching = document.getElementById('reg-coaching').value;
             const pass = document.getElementById('reg-pass').value;
             const confirm = document.getElementById('reg-pass-confirm').value;
 
-            if(pass !== confirm || pass.length < 6) { alert("Verification check match alignment mismatch warnings."); return; }
+            if(pass !== confirm || pass.length < 6) { alert("Security verification mismatch rules flag parameters error."); return; }
 
-            let studyMode = "N/A";
-            let circadian = "N/A";
+            let studyMode = "N/A", circadian = "N/A";
             if(coaching === "no") {
                 studyMode = document.getElementById('reg-study-mode').value;
                 circadian = document.getElementById('reg-circadian').value;
             }
 
             database[phone] = {
-                username: username,
-                password: pass,
-                dream: dream,
-                optional: optional,
-                year: year,
-                coaching: coaching,
-                studyMode: studyMode,
-                circadian: circadian,
-                loggedTimes: { static_gs: 0, optional_paper: 0, news_editorial: 0, tech_coding: 0 }
+                username: username, password: pass, dream: dream, optional: optional, hobby: hobby,
+                year: year, coaching: coaching, studyMode: studyMode, circadian: circadian,
+                loggedTimes: { static_gs: 0, optional_paper: 0, news_editorial: 0, hobby_relaxation: 0 }
             };
 
-            localStorage.setItem('upsc_community_platform_db', JSON.stringify(database));
-            alert("Configuration node successfully committed to core arrays. Proceed to log in.");
+            localStorage.setItem('upsc_platform_secure_db', JSON.stringify(database));
+            alert("Account generated securely on repository data matrix! Sign in to verify your access.");
             location.reload();
         }
 
@@ -333,7 +370,7 @@
                 sessionUserKey = phone;
                 bootAppLayout();
             } else {
-                alert("Security handshake denial mismatch configuration credentials.");
+                alert("Invalid telephone identification matching criteria validation failure flags.");
             }
         }
 
@@ -344,24 +381,24 @@
             const profile = database[sessionUserKey];
             document.getElementById('display-dream-tag').innerText = profile.dream;
             document.getElementById('display-user-tag').innerText = profile.username;
-            document.getElementById('display-year-tag').innerText = profile.year;
             document.getElementById('display-optional-tag').innerText = profile.optional;
+            document.getElementById('display-hobby-tag').innerText = profile.hobby;
 
-            // Generate customized programmatic profile metrics context text string
-            let exp = "";
-            let targetHours = 8;
+            // Conditional CSS Display - Show animations ONLY if target equals IPS
+            const isIPS = profile.dream.toUpperCase() === "IPS";
+            document.getElementById('ips-conditioning-box').classList.toggle('hidden', !isIPS);
+
+            let exp = "", targetHours = 8;
             if(profile.coaching === 'yes') {
-                exp = `Coaching Routine Profile: Ensure synchronization parameters are structured cleanly to track institute test schedules alongside your specific ${profile.optional} syllabus topics.`;
+                exp = `Coaching Routine Profile: Match institutional parameters alongside your custom ${profile.optional} notes tracking.`;
                 targetHours = 9;
             } else {
-                const clockType = profile.circadian === 'diurnal' ? "Diurnal (Daylight Peak Engine Framework)" : "Nocturnal (Late Night Owl Shift Module)";
-                const pathType = profile.studyMode === 'fulltime' ? "Full-Time Deep Self Study Routine" : "Concurrent College Allocation System Core";
-                exp = `Self Study Matrix: Operating a localized ${pathType} structured on a ${clockType} biological clock vector path. Optimize focus intervals continuously.`;
+                const cType = profile.circadian === 'diurnal' ? "Diurnal Peak Shift" : "Nocturnal Owl Shift";
+                const mType = profile.studyMode === 'fulltime' ? "Full-Time Self Study Dedication" : "Concurrent University/College Program Allocation";
+                exp = `Self Study Matrix: Operating a localized ${mType} structured on a ${cType} clock path.`;
                 targetHours = profile.studyMode === 'fulltime' ? 10 : 6;
             }
             
-            document.getElementById('schedule-badge').innerText = profile.coaching === 'yes' ? 'INSTITUTE TRACK' : `${profile.circadian.toUpperCase()} SHIFT`;
-            document.getElementById('schedule-badge').classList.remove('hidden');
             document.getElementById('profile-explanation-string').innerText = exp;
             document.getElementById('stat-stream-target').innerText = `${targetHours} Hours`;
 
@@ -375,24 +412,27 @@
             const profile = database[sessionUserKey];
 
             baseRoutineItems.forEach(item => {
-                let displayName = item.label;
-                if(item.id === 'optional_paper') displayName = `${profile.optional} Optional Paper Dedicated Study`;
+                let dName = item.label;
+                if(item.id === 'optional_paper') dName = `${profile.optional} Optional Subject Focus Study`;
+                if(item.id === 'hobby_relaxation') dName = `Personal Hobby Segment: ${profile.hobby}`;
                 
-                const formattedTime = formatSecondsToReadable(profile.loggedTimes[item.id] || 0);
-                const isThisActive = (activeTimerId === item.id);
-                const activeBtnStyles = isThisActive ? 'bg-amber-600 border-amber-400 animate-pulse text-slate-950 font-bold' : 'bg-slate-950 border-slate-700 hover:border-slate-500 text-slate-300';
-                const playPauseIcon = isThisActive ? 'fa-pause' : 'fa-play';
-
+                const fTime = formatSecondsToReadable(profile.loggedTimes[item.id] || 0);
+                const isActive = (activeTimerId === item.id);
+                const btnStyle = isActive ? 'bg-amber-600 border-amber-400 text-slate-950 font-bold animate-pulse' : 'bg-slate-950 border-slate-700 text-slate-300';
+                
                 container.innerHTML += `
                     <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800 flex flex-col justify-between gap-3">
                         <div class="flex justify-between items-start gap-2">
-                            <span class="text-xs font-semibold tracking-wide text-slate-300 block">${displayName}</span>
-                            <span id="time-display-${item.id}" class="font-mono text-sm bg-slate-950 px-2 py-0.5 rounded border border-slate-800 text-amber-400 font-bold">${formattedTime}</span>
+                            <span class="text-xs font-semibold text-slate-300 truncate max-w-[200px]">${dName}</span>
+                            <span id="time-display-${item.id}" class="font-mono text-xs bg-slate-950 px-2 py-0.5 rounded border border-slate-800 text-amber-400 font-bold">${fTime}</span>
                         </div>
-                        <button onclick="toggleStopwatchTrack('${item.id}')" class="w-full text-xs py-2 px-3 rounded-lg border flex items-center justify-center gap-2 transition ${activeBtnStyles}">
-                            <i class="fa-solid ${playPauseIcon}"></i>
-                            <span>${isThisActive ? 'Ticking... Tap to Pause' : 'Initialize Focus Tracking'}</span>
-                        </button>
+                        <div class="flex gap-2">
+                            <button onclick="toggleStopwatchTrack('${item.id}')" class="w-4/5 text-[11px] py-1.5 rounded-lg border flex items-center justify-center gap-1.5 transition ${btnStyle}">
+                                <i class="fa-solid ${isActive ? 'fa-pause' : 'fa-play'}"></i>
+                                <span>${isActive ? 'Pause Track' : 'Start Focus'}</span>
+                            </button>
+                            <button onclick="mishapResetTimer('${item.id}')" class="w-1/5 text-[11px] bg-slate-950 hover:bg-rose-950/30 border border-slate-800 hover:border-rose-900 rounded-lg text-slate-500 hover:text-rose-400 transition" title="Mishap Erase/Restart"><i class="fa-solid fa-arrow-rotate-left"></i></button>
+                        </div>
                     </div>
                 `;
             });
@@ -400,31 +440,33 @@
 
         function toggleStopwatchTrack(id) {
             if(activeTimerId === id) {
-                // Pause current active pipeline session tracker module execution
                 clearInterval(timerIntervalInstance);
                 activeTimerId = null;
             } else {
-                // Initialize context state swapping execution pathways
-                if(activeTimerId !== null) {
-                    clearInterval(timerIntervalInstance);
-                }
+                if(activeTimerId !== null) clearInterval(timerIntervalInstance);
                 activeTimerId = id;
                 timerIntervalInstance = setInterval(() => {
                     database[sessionUserKey].loggedTimes[id] = (database[sessionUserKey].loggedTimes[id] || 0) + 1;
                     document.getElementById(`time-display-${id}`).innerText = formatSecondsToReadable(database[sessionUserKey].loggedTimes[id]);
-                    
-                    // Flush buffer frames to device hardware arrays dynamically every second
-                    localStorage.setItem('upsc_community_platform_db', JSON.stringify(database));
+                    localStorage.setItem('upsc_platform_secure_db', JSON.stringify(database));
                     calculateGlobalMetrics();
                 }, 1000);
             }
             renderStopwatchInterface();
         }
 
+        function mishapResetTimer(id) {
+            if(confirm("Confirm: Clear data metrics specifically for this single row study track?")) {
+                if(activeTimerId === id) { clearInterval(timerIntervalInstance); activeTimerId = null; }
+                database[sessionUserKey].loggedTimes[id] = 0;
+                localStorage.setItem('upsc_platform_secure_db', JSON.stringify(database));
+                bootAppLayout();
+            }
+        }
+
         function calculateGlobalMetrics() {
             const profile = database[sessionUserKey];
-            let totalSecs = 0;
-            let dataArr = [];
+            let totalSecs = 0, dataArr = [];
 
             baseRoutineItems.forEach(item => {
                 const s = profile.loggedTimes[item.id] || 0;
@@ -435,19 +477,18 @@
             const totalHours = totalSecs / 3600;
             document.getElementById('stat-total-hours').innerText = `${totalHours.toFixed(2)}h`;
 
-            // Algorithmic Calculation Logic mapping out Eligibility dynamic output parameter scales
-            let baselineScaleHours = profile.coaching === 'yes' ? 9 : (profile.studyMode === 'fulltime' ? 10 : 6);
-            let calculatedEligibility = Math.min(100, Math.floor((totalHours / baselineScaleHours) * 100));
+            let baseScale = profile.coaching === 'yes' ? 9 : (profile.studyMode === 'fulltime' ? 10 : 6);
+            let eligibilityNum = Math.min(100, Math.floor((totalHours / baseScale) * 100));
 
-            document.getElementById('eligibility-percentage-text').innerText = `${calculatedEligibility}% eligible to get selected`;
-            document.getElementById('eligibility-progress-bar').style.width = `${calculatedEligibility}%`;
+            document.getElementById('eligibility-percentage-text').innerText = `${eligibilityNum}% eligible to get selected`;
+            document.getElementById('eligibility-progress-bar').style.width = `${eligibilityNum}%`;
 
             renderChartsPlotDistribution(dataArr);
         }
 
         function renderChartsPlotDistribution(dataArr) {
             const ctx = document.getElementById('pieChart').getContext('2d');
-            if (dataArr.every(v => v === 0)) dataArr = [2.5, 2.0, 1.0, 1.0]; // Default visualization logic if empty
+            if (dataArr.every(v => v === 0)) dataArr = [2.5, 2.0, 1.0, 1.0];
 
             if(pieChartInstance) {
                 pieChartInstance.data.datasets[0].data = dataArr;
@@ -456,7 +497,7 @@
                 pieChartInstance = new Chart(ctx, {
                     type: 'pie',
                     data: {
-                        labels: ['Static GS', 'Optional Paper', 'News Media', 'Tech Core'],
+                        labels: ['Static GS', 'Optional Paper', 'News Media', 'Hobby Time'],
                         datasets: [{
                             data: dataArr,
                             backgroundColor: ['#3b82f6', '#f59e0b', '#10b981', '#ec4899'],
@@ -472,14 +513,40 @@
             }
         }
 
-        function resetDailyTimers() {
-            if(confirm("Are you sure you want to completely clear today's metrics? This will erase accumulated stopwatch data.")) {
-                if(timerIntervalInstance) clearInterval(timerIntervalInstance);
-                activeTimerId = null;
-                baseRoutineItems.forEach(item => { database[sessionUserKey].loggedTimes[item.id] = 0; });
-                localStorage.setItem('upsc_community_platform_db', JSON.stringify(database));
-                bootAppLayout();
+        function toggleProfileModal(open) {
+            document.getElementById('profile-modal').classList.toggle('hidden', !open);
+            if(open) {
+                const p = database[sessionUserKey];
+                document.getElementById('edit-dream').value = p.dream;
+                document.getElementById('edit-optional').value = p.optional;
+                document.getElementById('edit-hobby').value = p.hobby;
+                document.getElementById('edit-coaching').value = p.coaching;
+                toggleCoachingFields('edit-coaching', 'edit-self-study-subfields');
+                if(p.coaching === 'no') {
+                    document.getElementById('edit-study-mode').value = p.studyMode;
+                    document.getElementById('edit-circadian').value = p.circadian;
+                }
             }
+        }
+
+        function saveProfileModifications() {
+            const p = database[sessionUserKey];
+            p.dream = document.getElementById('edit-dream').value.trim() || p.dream;
+            p.optional = document.getElementById('edit-optional').value.trim() || p.optional;
+            p.hobby = document.getElementById('edit-hobby').value.trim() || p.hobby;
+            p.coaching = document.getElementById('edit-coaching').value;
+            
+            if(p.coaching === 'no') {
+                p.studyMode = document.getElementById('edit-study-mode').value;
+                p.circadian = document.getElementById('edit-circadian').value;
+            } else {
+                p.studyMode = "N/A"; p.circadian = "N/A";
+            }
+
+            database[sessionUserKey] = p;
+            localStorage.setItem('upsc_platform_secure_db', JSON.stringify(database));
+            toggleProfileModal(false);
+            bootAppLayout();
         }
 
         function formatSecondsToReadable(totalSeconds) {

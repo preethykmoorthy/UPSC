@@ -76,7 +76,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-slate-400 uppercase mb-1">Personal Relaxation Hobby</label>
-                            <input type="text" id="reg-hobby" placeholder="e.g., Website Dev, Chess" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100">
+                            <input type="text" id="reg-hobby" placeholder="e.g., Chess, Painting" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-slate-100">
                         </div>
                     </div>
 
@@ -249,25 +249,10 @@
                 </div>
             </section>
 
-            <section id="ips-conditioning-box" class="bg-slate-800 p-6 rounded-2xl border border-slate-700 hidden">
-                <h3 class="text-md font-semibold mb-4 text-rose-400"><i class="fa-solid fa-shield-halved mr-2"></i>Tactical Physical Conditioning Standards (IPS Locked Module)</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center">
-                        <span class="text-xs font-bold text-slate-400 uppercase mb-2">Push-Ups Routine</span>
-                        <div class="avatar-container"><div class="avatar pushup-avatar"></div><div class="floor"></div></div>
-                        <span class="text-[11px] text-slate-400 mt-2 font-mono">15 Mins Target Velocity</span>
+            <section class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                <h3 class="text-md font-semibold mb-4 text-emerald-400"><i class="fa-solid fa-heart-pulse mr-2"></i>Aspirant Daily Physical & Health Conditioning Standard</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="conditioning-grid-mount">
                     </div>
-                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center">
-                        <span class="text-xs font-bold text-slate-400 uppercase mb-2">Pull-Ups Target</span>
-                        <div class="avatar-container"><div class="bar-structure"></div><div class="avatar pullup-avatar"></div></div>
-                        <span class="text-[11px] text-slate-400 mt-2 font-mono">15 Mins Functional Pulls</span>
-                    </div>
-                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center">
-                        <span class="text-xs font-bold text-slate-400 uppercase mb-2">Pranayama Box Breath</span>
-                        <div class="avatar-container"><div class="avatar breathing-avatar"></div><div class="breath-ring"></div></div>
-                        <span class="text-[11px] text-slate-400 mt-2 font-mono">15 Mins Oxygen Balance</span>
-                    </div>
-                </div>
             </section>
         </main>
     </div>
@@ -301,21 +286,19 @@
 
         function triggerSecureAudioOTP() {
             const phone = document.getElementById('reg-phone').value.trim();
-            if(phone.length < 10) { alert("Invalid telephone numerical layout pattern parameter lengths."); return; }
+            if(phone.length < 10) { alert("Invalid phone configuration mapping parameters."); return; }
             if(database[phone]) { alert("An operational data profile matrix exists for this entry master identity node."); return; }
 
             generatedMockOTP = Math.floor(100000 + Math.random() * 900000).toString();
             
-            // SECURITY SPEECH ENGINE CALL - Speaks token code out loud cleanly
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const textPayload = `Verification requested. Your secure entry validation token passcode is: ${generatedMockOTP.split('').join(' ')}. Re-verifying passcode: ${generatedMockOTP.split('').join(' ')}. Please input this token code to verify your phone number.`;
                 const speechNode = new SpeechSynthesisUtterance(textPayload);
                 speechNode.rate = 0.85;
-                speechNode.pitch = 1.0;
                 window.speechSynthesis.speak(speechNode);
             } else {
-                alert(`Audio synthesis layer unavailable. Sandbox fallback authentication verification token code: ${generatedMockOTP}`);
+                alert(`Audio synthesis layer unavailable. Sandbox fallback code: ${generatedMockOTP}`);
             }
 
             document.getElementById('sg-step2').classList.remove('hidden');
@@ -327,7 +310,7 @@
                 document.getElementById('sg-step2').classList.add('hidden');
                 document.getElementById('sg-step3').classList.remove('hidden');
             } else {
-                alert("Cryptographic identification checksum parameter mismatch verification flag failed.");
+                alert("Cryptographic identification verification flag failed.");
             }
         }
 
@@ -342,7 +325,7 @@
             const pass = document.getElementById('reg-pass').value;
             const confirm = document.getElementById('reg-pass-confirm').value;
 
-            if(pass !== confirm || pass.length < 6) { alert("Security verification mismatch rules flag parameters error."); return; }
+            if(pass !== confirm || pass.length < 6) { alert("Security verification mismatch rules parameters error."); return; }
 
             let studyMode = "N/A", circadian = "N/A";
             if(coaching === "no") {
@@ -370,7 +353,7 @@
                 sessionUserKey = phone;
                 bootAppLayout();
             } else {
-                alert("Invalid telephone identification matching criteria validation failure flags.");
+                alert("Invalid telephone identification matching criteria.");
             }
         }
 
@@ -384,9 +367,8 @@
             document.getElementById('display-optional-tag').innerText = profile.optional;
             document.getElementById('display-hobby-tag').innerText = profile.hobby;
 
-            // Conditional CSS Display - Show animations ONLY if target equals IPS
-            const isIPS = profile.dream.toUpperCase() === "IPS";
-            document.getElementById('ips-conditioning-box').classList.toggle('hidden', !isIPS);
+            // Generate Physical Conditioning Display Block based on Chosen Target Stream
+            renderConditioningModules(profile.dream.toUpperCase() === "IPS");
 
             let exp = "", targetHours = 8;
             if(profile.coaching === 'yes') {
@@ -404,6 +386,47 @@
 
             renderStopwatchInterface();
             calculateGlobalMetrics();
+        }
+
+        function renderConditioningModules(isIPS) {
+            const mount = document.getElementById('conditioning-grid-mount');
+            
+            // Universal elements loaded for all profiles (IAS, IPS, IFS, etc)
+            let layoutHTML = `
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center">
+                    <span class="text-xs font-bold text-emerald-400 uppercase mb-2">Pranayama Box Breath</span>
+                    <div class="avatar-container"><div class="avatar breathing-avatar"></div><div class="breath-ring"></div></div>
+                    <span class="text-[11px] text-slate-400 mt-2 font-mono text-center">15 Mins Universal Optimization</span>
+                </div>
+                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center">
+                    <span class="text-xs font-bold text-emerald-400 uppercase mb-2">Daily Walking Routine</span>
+                    <div class="avatar-container"><div class="avatar running-avatar"></div><div class="moving-ground"></div></div>
+                    <span class="text-[11px] text-slate-400 mt-2 font-mono text-center">Active Baseline Movement</span>
+                </div>
+            `;
+
+            // Append specific high-intensity options if user matches the IPS selection rule
+            if(isIPS) {
+                layoutHTML += `
+                    <div class="bg-slate-950 p-4 rounded-xl border border-rose-900/50 flex flex-col items-center">
+                        <span class="text-xs font-bold text-rose-400 uppercase mb-2">Push-Ups Matrix</span>
+                        <div class="avatar-container"><div class="avatar pushup-avatar"></div><div class="floor"></div></div>
+                        <span class="text-[11px] text-slate-400 mt-2 font-mono text-center">Tactical Arm Stamina</span>
+                    </div>
+                    <div class="bg-slate-950 p-4 rounded-xl border border-rose-900/50 flex flex-col items-center">
+                        <span class="text-xs font-bold text-rose-400 uppercase mb-2">Pull-Ups Target</span>
+                        <div class="avatar-container"><div class="bar-structure"></div><div class="avatar pullup-avatar"></div></div>
+                        <span class="text-[11px] text-slate-400 mt-2 font-mono text-center">Grip Mechanics Frame</span>
+                    </div>
+                    <div class="bg-slate-950 p-4 rounded-xl border border-rose-900/50 flex flex-col justify-center items-center text-center p-3 col-span-1 sm:col-span-2 lg:col-span-4">
+                        <div class="text-xl text-rose-400 mb-1"><i class="fa-solid fa-person-running"></i></div>
+                        <span class="text-xs font-bold text-slate-300 block mb-1">1KM Tactical Run Speed Challenge</span>
+                        <p class="text-[11px] text-slate-400">Locked Service Requirement: Track precision metrics to clear physical timing bounds during official tests.</p>
+                    </div>
+                `;
+            }
+
+            mount.innerHTML = layoutHTML;
         }
 
         function renderStopwatchInterface() {

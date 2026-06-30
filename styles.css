@@ -11,13 +11,12 @@
     margin: 10px auto;
 }
 
+/* Base style for shared positioning properties */
 .avatar {
-    width: 20px;
-    height: 40px;
-    background: #f59e0b;
     position: absolute;
     left: 40px;
     border-radius: 4px;
+    background: #f59e0b;
 }
 
 /* 1. PUSH-UP ANIMATION EFFECT */
@@ -25,7 +24,8 @@
     width: 40px;
     height: 15px;
     top: 50px;
-    transform-origin: bottom right;
+    left: 30px; /* Centered relative to the 80px floor */
+    transform-origin: bottom center;
     animation: pushupAnim 2s infinite ease-in-out;
 }
 @keyframes pushupAnim {
@@ -51,6 +51,8 @@
     left: 15px;
 }
 .pullup-avatar {
+    width: 20px;
+    height: 40px;
     top: 30px;
     animation: pullupAnim 2.5s infinite ease-in-out;
 }
@@ -61,7 +63,8 @@
 
 /* 3. PRANAYAMA BREATHING ANIMATION EFFECT */
 .breathing-avatar {
-    top: 30px;
+    top: 38px;
+    left: 38px;
     border-radius: 50%;
     width: 24px;
     height: 24px;
@@ -69,13 +72,14 @@
 }
 .breath-ring {
     position: absolute;
-    top: 22px;
-    left: 32px;
+    top: 30px; /* Centered cleanly around the breathing avatar */
+    left: 30px;
     width: 40px;
     height: 40px;
     border: 3px solid #34d399;
     border-radius: 50%;
     animation: breathPulse 4s infinite ease-in-out;
+    box-sizing: border-box;
 }
 @keyframes breathPulse {
     0%, 100% { transform: scale(0.6); opacity: 0.3; }
@@ -84,6 +88,8 @@
 
 /* 4. RUNNING / WALKING TRACKER ANIMATION */
 .running-avatar {
+    width: 20px;
+    height: 40px;
     top: 30px;
     animation: runStride 0.8s infinite linear;
 }
@@ -93,8 +99,8 @@
 }
 .moving-ground {
     width: 80px;
-    height: 2px;
-    background: dashed #475569;
+    height: 0;
+    border-bottom: 2px dashed #475569; /* Fixed syntax error */
     position: absolute;
     bottom: 25px;
     left: 10px;
